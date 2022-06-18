@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">LBCTechnicalTest</string>
+
+    <!-- Universal resources -->
+    <string name="loading">Loading…</string>
+    <string name="network_error">An error has occurred, please try again later</string>
+
+    <!-- Album list -->
+    <string name="album_name">Album %d</string>
 </resources>

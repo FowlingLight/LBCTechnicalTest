@@ -1,6 +1,7 @@
 package com.example.lbctechnicaltest
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -10,12 +11,19 @@ import androidx.navigation.ui.NavigationUI
 import com.example.lbctechnicaltest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        const val TAG = "MainActivity"
+    }
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
     val loaderVisible = MutableLiveData(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.v(TAG, "onCreate")
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -32,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.v(TAG, "onOptionsItemSelected")
+
         if (item.itemId == android.R.id.home) {
             onBackPressed()
             return true

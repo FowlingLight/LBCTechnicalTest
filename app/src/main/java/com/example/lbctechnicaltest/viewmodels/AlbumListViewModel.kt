@@ -2,18 +2,20 @@ package com.example.lbctechnicaltest.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.lbctechnicaltest.api.RetrofitAPIClient
+import com.example.lbctechnicaltest.api.*
 import com.example.lbctechnicaltest.models.*
 import com.example.lbctechnicaltest.models.utils.NetworkState
-import com.example.lbctechnicaltest.utils.SchedulerProvider
+import com.example.lbctechnicaltest.utils.*
 
-class AlbumListViewModel : BaseViewModel() {
+class AlbumListViewModel(
+    private val albumService: AlbumService = RetrofitAPIClient.albumService,
+    private val schedulerProvider: BaseSchedulerProvider = SchedulerProvider()
+) : BaseViewModel() {
     companion object {
         const val TAG = "AlbumListViewModel"
     }
 
     val albums = MutableLiveData<List<Album>>()
-    private val schedulerProvider = SchedulerProvider()
 
     fun getAlbums() {
         Log.v(TAG, "getAlbums")
@@ -22,7 +24,7 @@ class AlbumListViewModel : BaseViewModel() {
 
         networkState.postValue(NetworkState.PENDING)
         disposableList.add(
-            RetrofitAPIClient.albumService.getAllTracks()
+            albumService.getAllTracks()
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
                 .subscribe({ response ->
@@ -42,6 +44,8 @@ class AlbumListViewModel : BaseViewModel() {
     }
 
     private fun buildAlbumList(trackList: List<Track>): List<Album> {
+        Log.v(TAG, "buildAlbumList")
+
         val albumList = mutableListOf<Album>()
 
         for (track in trackList) {

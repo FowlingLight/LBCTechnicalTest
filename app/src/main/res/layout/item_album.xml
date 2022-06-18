@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -18,47 +17,9 @@
         android:orientation="vertical"
         android:padding="@dimen/margin">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/item_album_image_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/item_album_image_first"
-                android:layout_width="@dimen/album_image_size"
-                android:layout_height="@dimen/album_image_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_broken_image_24" />
-
-            <ImageView
-                android:id="@+id/item_album_image_second"
-                android:layout_width="@dimen/album_image_size"
-                android:layout_height="@dimen/album_image_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_album_image_first"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_broken_image_24" />
-
-            <ImageView
-                android:id="@+id/item_album_image_third"
-                android:layout_width="@dimen/album_image_size"
-                android:layout_height="@dimen/album_image_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_album_image_first"
-                tools:src="@drawable/ic_broken_image_24" />
-
-            <ImageView
-                android:id="@+id/item_album_image_fourth"
-                android:layout_width="@dimen/album_image_size"
-                android:layout_height="@dimen/album_image_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:src="@drawable/ic_broken_image_24" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <include
+            android:id="@+id/item_album_picture"
+            layout="@layout/custom_album_image" />
 
         <TextView
             android:id="@+id/item_album_title"

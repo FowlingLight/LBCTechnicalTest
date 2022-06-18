@@ -9,11 +9,6 @@ import com.example.lbctechnicaltest.databinding.*
 import com.example.lbctechnicaltest.models.Album
 import com.example.lbctechnicaltest.utils.loadImageWithCache
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AlbumDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AlbumDetailsFragment : Fragment() {
     companion object {
         const val TAG = "AlbumDetailsFragment"
@@ -23,7 +18,6 @@ class AlbumDetailsFragment : Fragment() {
     private lateinit var binding: FragmentAlbumDetailsBinding
 
     private lateinit var album: Album
-    private var index = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +49,15 @@ class AlbumDetailsFragment : Fragment() {
     }
 
     private fun displaySongsThumbnails(binding: FragmentAlbumDetailsBinding) {
-        //TODO REPLACE BY DYNAMIC GRID LAYOUT
-        album.trackList.getOrNull(0)?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumImageFirst) }
-        album.trackList.getOrNull(1)?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumImageSecond) }
-        album.trackList.getOrNull(2)?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumImageThird) }
-        album.trackList.getOrNull(3)?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumImageFourth) }
+        Log.v(TAG, "displaySongsThumbnails")
+
+        album.trackList.getOrNull(0)
+            ?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumPicture.itemAlbumImageFirst) }
+        album.trackList.getOrNull(1)
+            ?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumPicture.itemAlbumImageSecond) }
+        album.trackList.getOrNull(2)
+            ?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumPicture.itemAlbumImageThird) }
+        album.trackList.getOrNull(3)
+            ?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumPicture.itemAlbumImageFourth) }
     }
 }

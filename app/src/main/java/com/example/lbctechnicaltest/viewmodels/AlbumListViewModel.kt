@@ -45,7 +45,7 @@ class AlbumListViewModel : BaseViewModel() {
         val albumList = mutableListOf<Album>()
 
         for (track in trackList) {
-            albumList.getOrNull(track.albumId)?.trackList?.add(track) ?: run {
+            albumList.find { it.id == track.albumId }?.trackList?.add(track) ?: run {
                 albumList.add(Album(track.albumId, mutableListOf(track)))
             }
         }

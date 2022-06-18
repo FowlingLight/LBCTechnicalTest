@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.*
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.lbctechnicaltest.*
 import com.example.lbctechnicaltest.databinding.FragmentAlbumListBinding
@@ -44,14 +45,14 @@ class AlbumListFragment : Fragment() {
 
         val adapter = AlbumListAdapter(object : RecyclerViewItemClickListener {
             override fun onItemClicked(position: Int) {
-                val albumId = viewModel.albums.value?.get(position)?.id ?: -1L
+                viewModel.albums.value?.get(position)?.let {
 
-                Log.d(TAG, "Displaying album $albumId")
+                    Log.d(TAG, "Displaying album ${it.id}")
 
-//                findNavController().navigate(
-//                    R.id.albumDetailsFragment,
-//                    bundleOf(ALBUM_ID to albumId)
-//                )
+                    findNavController().navigate(
+                        AlbumListFragmentDirections.actionAlbumListFragmentToAlbumDetailFragment(it)
+                    )
+                }
             }
         })
         binding.albumListRecycler.layoutManager = GridLayoutManager(requireContext(), 3)

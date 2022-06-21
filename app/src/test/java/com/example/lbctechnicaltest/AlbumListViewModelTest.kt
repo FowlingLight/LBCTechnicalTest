@@ -2,7 +2,8 @@ package com.example.lbctechnicaltest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.lbctechnicaltest.api.AlbumService
+import com.example.lbctechnicaltest.api.TrackService
+import com.example.lbctechnicaltest.database.TrackDao
 import com.example.lbctechnicaltest.models.Track
 import com.example.lbctechnicaltest.models.utils.NetworkState
 import com.example.lbctechnicaltest.utils.TrampolineSchedulerProvider
@@ -22,7 +23,8 @@ class AlbumListViewModelTest {
 
     @Mock
     private lateinit var observer: Observer<NetworkState>
-    private val mock = mock(AlbumService::class.java)
+    private val serviceMock = mock(TrackService::class.java)
+    private val daoMock = mock(TrackDao::class.java)
 
     private lateinit var viewModel: AlbumListViewModel
 
@@ -30,13 +32,13 @@ class AlbumListViewModelTest {
     @Throws(Exception::class)
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        viewModel = AlbumListViewModel(mock, TrampolineSchedulerProvider())
+        viewModel = AlbumListViewModel(serviceMock, TrampolineSchedulerProvider())
         viewModel.networkState.observeForever(observer)
     }
 
     @Test
     fun response_null_test() {
-        `when`(mock.getAllTracks()).thenReturn(null)
+        `when`(serviceMock.getAllTracks()).thenReturn(null)
 
         Assert.assertNull(viewModel.albums.value)
         Assert.assertTrue(viewModel.networkState.hasObservers())
@@ -47,18 +49,18 @@ class AlbumListViewModelTest {
         // Mock API response
         val response = listOf<Track>()
 
-        `when`(mock.getAllTracks()).thenReturn(Single.just(response))
-        viewModel.getAlbums()
+        `when`(serviceMock.getAllTracks()).thenReturn(Single.just(response))
+        viewModel.getAlbums(daoMock)
         verify(observer)?.onChanged(NetworkState.PENDING)
         verify(observer)?.onChanged(NetworkState.SUCCESS)
     }
 
     @Test
     fun api_fetch_data_error_test() {
-        `when`(mock.getAllTracks()).thenReturn(
+        `when`(serviceMock.getAllTracks()).thenReturn(
             Single.error(Throwable("Api error -- TEST"))
         )
-        viewModel.getAlbums()
+        viewModel.getAlbums(daoMock)
         verify(observer)?.onChanged(NetworkState.PENDING)
         verify(observer)?.onChanged(NetworkState.ERROR)
     }

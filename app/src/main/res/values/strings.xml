@@ -3,7 +3,7 @@
 
     <!-- Universal resources -->
     <string name="loading">Loading…</string>
-    <string name="network_error">Unable to reach the server, please try again later</string>
+    <string name="network_error">Unable to reach the server, results were loaded from the local database</string>
 
     <!-- Album list -->
     <string name="album_name">Album %d</string>

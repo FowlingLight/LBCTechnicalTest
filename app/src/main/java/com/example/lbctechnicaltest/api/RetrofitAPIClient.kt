@@ -25,6 +25,6 @@ class RetrofitAPIClient {
                 .build()
         }
 
-        val albumService: AlbumService by lazy { retrofit.create(AlbumService::class.java) }
+        val trackService: TrackService by lazy { retrofit.create(TrackService::class.java) }
     }
 }

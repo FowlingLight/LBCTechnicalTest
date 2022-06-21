@@ -25,6 +25,11 @@ Permet de lier de façon typée les éléments d'un layout à sa vue. Cette faç
 
 Le databinding embarque aussi une façon plus avancée d'interragir avec une Activity ou un Fragment grace à la possibilité d'appeler directement une fonction de ces derniers lors d'un clic ou juste pour effectuer un affichage plus complexe.
 
+### Repository (tentative d'implémentation sur la branche repository --> exception sans message sur une requête hors ligne suite à un soucis de cache RX)
+Ce pattern dissocie le ViewModel de la gestion réseau directe. Le ViewModel va ainsi appeler un Repository qui va se charger de choisir de quelle source doivent être renvoyées les données.
+
+Cette distinction améliore la lisibilité du code et permet d'ajouter de nouvelles sources de données plus facilement, que ça soit un autre serveur, une autre base de données, ou juste un fichier de resources local.
+
 
 # Librairies
 
@@ -38,3 +43,6 @@ Librairie de téléchargement d'image. Inclut directemement une gestion de cache
 Un combo très puissant pour la gestion réseau, RX proposant une façon simple de gérer les threads et leurs retours, tandis que Retrofit s'occupe de la génération des requêtes elles-mêmes ainsi que la récupération de la réponse serveur.
 
 L'initialisation de ce système est le seul défaut, étant un peu plus long que des méthodes plus directes et exigeant une sythaxe spécifique, mais permettant une gestion des retours et erreurs très poussée.
+
+### Room
+Gestionnaire de base de données locale recommandé par Google. Très simple et rapide à mettre en place.

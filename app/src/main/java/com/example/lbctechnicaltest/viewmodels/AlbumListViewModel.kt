@@ -32,6 +32,7 @@ class AlbumListViewModel(
             try {
                 disposableList.add(trackRepository.getAllTracks(disposableList).subscribe {
                     albums.postValue(buildAlbumList(it))
+
                     loaderVisible.postValue(false)
                     networkState.postValue(NetworkState.SUCCESS)
                 })

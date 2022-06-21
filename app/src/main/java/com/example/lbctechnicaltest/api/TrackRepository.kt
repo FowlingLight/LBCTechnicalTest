@@ -1,5 +1,6 @@
 package com.example.lbctechnicaltest.api
 
+import android.util.Log
 import com.example.lbctechnicaltest.api.interactor.*
 import com.example.lbctechnicaltest.database.AppDatabase
 import com.example.lbctechnicaltest.models.Track
@@ -25,6 +26,7 @@ class TrackRepository(
         TrackNetworkInteractor(memoryInteractor, databaseInteractor, trackService, schedulerProvider)
 
     fun getAllTracks(disposableList: MutableList<Disposable>): Observable<List<Track>> {
+        Log.v(TAG, "getAllTracks")
 
         disposableList.add(
             Observable.concat(
@@ -39,43 +41,11 @@ class TrackRepository(
         )
 
         return memoryInteractor.tracksObservable
-
-        /*var networkState = NetworkState.PENDING
-        var albums: List<Album>
-
-        withContext(Dispatchers.IO) {
-            trackService.getAllTracks()
-            trackDao.insertAll(trackService.getAllTracks())
-        }
-            .observeOn(schedulerProvider.ui())
-            .subscribeOn(schedulerProvider.io())
-            .subscribe({ response ->
-                albums = buildAlbumList(response)
-
-                schedulerProvider.io().scheduleDirect {
-                    trackDao.deleteAll()
-                    trackDao.insertAll(response)
-                }
-
-                Log.d(TAG, "getAlbums: SUCCESS")
-
-                return@subscribe
-            }) { throwable -> // Throw error
-                throwable.printStackTrace()
-
-                schedulerProvider.io().scheduleDirect {
-                    albums.postValue(buildAlbumList(trackDao?.getAll() ?: emptyList()))
-                }
-
-                loaderVisible.postValue(false)
-
-                networkState.postValue(NetworkState.ERROR)
-
-                Log.e(TAG, "getAlbums: ERROR")
-            }.dispose()*/
     }
 
     private fun handleNonHttpException(throwable: Throwable?) {
+        Log.v(TAG, "handleNonHttpException")
+
         when (throwable) {
             is HttpException, is JsonSyntaxException, is SocketTimeoutException, is ConnectException -> {
                 throw LBCException()

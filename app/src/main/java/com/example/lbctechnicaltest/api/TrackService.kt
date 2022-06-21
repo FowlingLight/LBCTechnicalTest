@@ -4,7 +4,7 @@ import com.example.lbctechnicaltest.models.Track
 import io.reactivex.Single
 import retrofit2.http.GET
 
-interface AlbumService {
+interface TrackService {
     @GET("img/shared/technical-test.json")
     fun getAllTracks(): Single<List<Track>>
 }

@@ -8,22 +8,20 @@ import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.lbctechnicaltest.*
+import com.example.lbctechnicaltest.database.AppDatabase
 import com.example.lbctechnicaltest.databinding.FragmentAlbumListBinding
 import com.example.lbctechnicaltest.models.utils.NetworkState
 import com.example.lbctechnicaltest.utils.RecyclerViewItemClickListener
 import com.example.lbctechnicaltest.viewmodels.AlbumListViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AlbumListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AlbumListFragment : Fragment() {
     companion object {
         const val TAG = "AlbumListFragment"
     }
 
-    private val viewModel: AlbumListViewModel by viewModels()
+    private val viewModel: AlbumListViewModel by viewModels {
+        AlbumListViewModel.AlbumListViewModelFactory(this, AppDatabase.getDatabase(requireContext()))
+    }
 
     private lateinit var binding: FragmentAlbumListBinding
 

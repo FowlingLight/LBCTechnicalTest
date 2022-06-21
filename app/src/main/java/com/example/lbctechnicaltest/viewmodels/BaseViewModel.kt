@@ -4,11 +4,16 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.lbctechnicaltest.models.utils.NetworkState
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel(), CoroutineScope {
     companion object {
         const val TAG = "BaseViewModel"
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
 
     var loaderVisible = MutableLiveData<Boolean>()
     var networkState = MutableLiveData<NetworkState>()

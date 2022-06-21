@@ -20,10 +20,18 @@ class AlbumListFragment : Fragment() {
     }
 
     private val viewModel: AlbumListViewModel by viewModels {
-        AlbumListViewModel.AlbumListViewModelFactory(this, AppDatabase.getDatabase(requireContext()))
+        AlbumListViewModel.AlbumListViewModelFactory(this, AppDatabase.getDatabase(requireContext()).trackDao())
     }
 
     private lateinit var binding: FragmentAlbumListBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.v(TAG, "onCreate")
+
+        super.onCreate(savedInstanceState)
+
+        viewModel.getAlbums()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +79,5 @@ class AlbumListFragment : Fragment() {
                 viewModel.networkState.postValue(NetworkState.PENDING)
             }
         }
-
-        viewModel.getAlbums()
     }
 }

@@ -2,17 +2,17 @@ package com.example.lbctechnicaltest.api
 
 import android.util.Log
 import com.example.lbctechnicaltest.api.interactor.*
-import com.example.lbctechnicaltest.database.AppDatabase
+import com.example.lbctechnicaltest.database.*
 import com.example.lbctechnicaltest.models.Track
 import com.example.lbctechnicaltest.utils.*
 import com.google.gson.JsonSyntaxException
-import io.reactivex.Observable
+import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 import java.net.*
 
 class TrackRepository(
-    database: AppDatabase,
+    trackDao: TrackDao,
     trackService: TrackService,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
@@ -21,7 +21,7 @@ class TrackRepository(
     }
 
     private var memoryInteractor = TrackMemoryInteractor()
-    private var databaseInteractor = TrackDatabaseInteractor(database, memoryInteractor, schedulerProvider)
+    private var databaseInteractor = TrackDatabaseInteractor(trackDao, memoryInteractor, schedulerProvider)
     private var networkInteractor =
         TrackNetworkInteractor(memoryInteractor, databaseInteractor, trackService, schedulerProvider)
 
@@ -47,8 +47,8 @@ class TrackRepository(
         Log.v(TAG, "handleNonHttpException")
 
         when (throwable) {
-            is HttpException, is JsonSyntaxException, is SocketTimeoutException, is ConnectException -> {
-                throw LBCException()
+            is HttpException, is JsonSyntaxException, is SocketTimeoutException, is ConnectException, is UnknownHostException -> {
+//                throw LBCException()
             }
             else -> {
                 throwable?.printStackTrace()

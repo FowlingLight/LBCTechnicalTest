@@ -4,14 +4,14 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lbctechnicaltest.api.*
-import com.example.lbctechnicaltest.database.AppDatabase
+import com.example.lbctechnicaltest.database.*
 import com.example.lbctechnicaltest.models.*
 import com.example.lbctechnicaltest.models.utils.NetworkState
 import com.example.lbctechnicaltest.utils.*
 import kotlinx.coroutines.launch
 
 class AlbumListViewModel(
-    database: AppDatabase,
+    trackDao: TrackDao,
     trackService: TrackService,
     schedulerProvider: BaseSchedulerProvider
 ) : BaseViewModel() {
@@ -20,7 +20,7 @@ class AlbumListViewModel(
     }
 
     val albums = MutableLiveData<List<Album>>()
-    private val trackRepository = TrackRepository(database, trackService, schedulerProvider)
+    private val trackRepository = TrackRepository(trackDao, trackService, schedulerProvider)
 
     fun getAlbums() {
         Log.v(TAG, "getAlbums")
@@ -37,6 +37,7 @@ class AlbumListViewModel(
                     networkState.postValue(NetworkState.SUCCESS)
                 })
             } catch (e: LBCException) {
+                loaderVisible.postValue(false)
                 networkState.postValue(NetworkState.ERROR)
             }
         }
@@ -58,7 +59,7 @@ class AlbumListViewModel(
 
     class AlbumListViewModelFactory(
         owner: SavedStateRegistryOwner,
-        private val database: AppDatabase,
+        private val trackDao: TrackDao,
         private val trackService: TrackService = RetrofitAPIClient.trackService,
         private val schedulerProvider: BaseSchedulerProvider = SchedulerProvider()
     ) : AbstractSavedStateViewModelFactory(owner, null) {
@@ -67,6 +68,6 @@ class AlbumListViewModel(
             key: String,
             modelClass: Class<T>,
             state: SavedStateHandle
-        ) = AlbumListViewModel(database, trackService, schedulerProvider) as T
+        ) = AlbumListViewModel(trackDao, trackService, schedulerProvider) as T
     }
 }

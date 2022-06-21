@@ -24,7 +24,7 @@ class AlbumListViewModelTest {
     @Mock
     private lateinit var observer: Observer<NetworkState>
     private val serviceMock = mock(TrackService::class.java)
-    private val databaseMock = mock(AppDatabase::class.java)
+    private val daoMock = mock(TrackDao::class.java)
 
     private lateinit var viewModel: AlbumListViewModel
 
@@ -32,7 +32,7 @@ class AlbumListViewModelTest {
     @Throws(Exception::class)
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        viewModel = AlbumListViewModel(databaseMock, serviceMock, TrampolineSchedulerProvider())
+        viewModel = AlbumListViewModel(daoMock, serviceMock, TrampolineSchedulerProvider())
         viewModel.networkState.observeForever(observer)
     }
 

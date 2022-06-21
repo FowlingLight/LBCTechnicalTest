@@ -5,14 +5,14 @@ import io.reactivex.*
 import io.reactivex.subjects.BehaviorSubject
 
 class TrackMemoryInteractor {
-    private var observable = BehaviorSubject.create<List<Track>?>()
+    private var observable = BehaviorSubject.create<List<Track>>()
     private var tracks = mutableListOf<Track>()
 
-    fun saveData(track: List<Track>) {
+    fun saveData(tracks: List<Track>) {
         this.tracks.clear()
-        this.tracks.addAll(track)
+        this.tracks.addAll(tracks)
 
-        observable.onNext(track)
+        observable.onNext(tracks)
     }
 
     fun getTracks(): Maybe<List<Track>> {

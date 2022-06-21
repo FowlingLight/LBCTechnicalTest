@@ -23,6 +23,13 @@ class AlbumListFragment : Fragment() {
 
     private lateinit var binding: FragmentAlbumListBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.v(TAG, "onCreate")
+
+        super.onCreate(savedInstanceState)
+
+        viewModel.getAlbums(AppDatabase.getDatabase(requireContext()).trackDao())
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,7 +76,5 @@ class AlbumListFragment : Fragment() {
                 viewModel.networkState.postValue(NetworkState.PENDING)
             }
         }
-
-        viewModel.getAlbums(AppDatabase.getDatabase(requireContext()).trackDao())
     }
 }

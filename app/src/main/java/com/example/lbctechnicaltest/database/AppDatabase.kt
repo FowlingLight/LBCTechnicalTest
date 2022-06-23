@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.*
 import com.example.lbctechnicaltest.models.Track
 
+/**
+ * Small Room database storing all the songs in a table
+ */
 @Database(entities = [Track::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun trackDao(): TrackDao

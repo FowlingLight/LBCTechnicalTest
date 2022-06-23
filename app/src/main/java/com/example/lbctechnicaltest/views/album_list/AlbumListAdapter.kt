@@ -36,14 +36,17 @@ class AlbumListAdapter(private val listener: RecyclerViewItemClickListener) :
         holder.binding.apply {
             album = item
 
-            displaySongsThumbnails(this, item)
+            displayAlbumThumbnail(this, item)
 
             itemAlbumLayout.setOnClickListener { listener.onItemClicked(position) }
         }
     }
 
-    private fun displaySongsThumbnails(binding: ItemAlbumBinding, album: Album) {
-        Log.v(TAG, "displaySongsThumbnails")
+    /**
+     * Takes the first 4 song and get their thumbnail to generate an album picture
+     */
+    private fun displayAlbumThumbnail(binding: ItemAlbumBinding, album: Album) {
+        Log.v(TAG, "displayAlbumThumbnail")
 
         album.trackList.getOrNull(0)
             ?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumPicture.itemAlbumImageFirst) }

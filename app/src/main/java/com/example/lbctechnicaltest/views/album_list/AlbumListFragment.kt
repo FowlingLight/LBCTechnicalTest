@@ -30,6 +30,7 @@ class AlbumListFragment : Fragment() {
 
         viewModel.getAlbums(AppDatabase.getDatabase(requireContext()).trackDao())
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +50,6 @@ class AlbumListFragment : Fragment() {
         val adapter = AlbumListAdapter(object : RecyclerViewItemClickListener {
             override fun onItemClicked(position: Int) {
                 viewModel.albums.value?.get(position)?.let {
-
                     Log.d(TAG, "Displaying album ${it.id}")
 
                     findNavController().navigate(
@@ -60,6 +60,11 @@ class AlbumListFragment : Fragment() {
         })
         binding.albumListRecycler.layoutManager = GridLayoutManager(requireContext(), 3)
         binding.albumListRecycler.adapter = adapter
+
+        initObservables(adapter)
+    }
+
+    private fun initObservables(adapter: AlbumListAdapter) {
         viewModel.albums.observe(viewLifecycleOwner) {
             it?.let {
                 Log.d(TAG, "Setting up the album list")

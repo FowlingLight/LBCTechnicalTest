@@ -5,10 +5,16 @@ import android.widget.ImageView
 import com.example.lbctechnicaltest.R
 import com.squareup.picasso.*
 
+/**
+ * Empty function to remove the warning stating the function is empty
+ */
 fun doNothing() {
     //does literally nothing
 }
 
+/**
+ * Loads an image from URL and puts it in an ImageView with cache handling
+ */
 fun loadImageWithCache(
     url: String,
     imageView: ImageView
@@ -33,7 +39,7 @@ fun loadImageWithCache(
 
                         @Override
                         override fun onError(e: Exception?) {
-                            Log.v("Picasso", "Could not fetch image")
+                            Log.w("Picasso", "Could not fetch image")
                         }
                     })
             }

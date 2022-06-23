@@ -19,6 +19,9 @@ class AlbumListViewModel(
 
     val albums = MutableLiveData<List<Album>>()
 
+    /**
+     * Gets data from a network call or the database if we get a network error
+     */
     fun getAlbums(trackDao: TrackDao?) {
         Log.v(TAG, "getAlbums")
 
@@ -55,6 +58,9 @@ class AlbumListViewModel(
                 })
     }
 
+    /**
+     * Generates a list of albums from a list of tracks by grouping them by albumId
+     */
     private fun buildAlbumList(trackList: List<Track>): List<Album> {
         Log.v(TAG, "buildAlbumList")
 

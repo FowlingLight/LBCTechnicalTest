@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lbctechnicaltest.R
 import com.example.lbctechnicaltest.databinding.ItemTrackBinding
-import com.example.lbctechnicaltest.models.*
+import com.example.lbctechnicaltest.models.Track
 import com.example.lbctechnicaltest.utils.loadImageWithCache
 
 class AlbumDetailsAdapter : RecyclerView.Adapter<AlbumDetailsAdapter.PlaylistViewHolder>() {

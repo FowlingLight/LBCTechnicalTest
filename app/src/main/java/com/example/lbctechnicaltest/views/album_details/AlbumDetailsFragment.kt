@@ -3,9 +3,9 @@ package com.example.lbctechnicaltest.views.album_details
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.*
-import androidx.navigation.fragment.*
-import com.example.lbctechnicaltest.databinding.*
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
+import com.example.lbctechnicaltest.databinding.FragmentAlbumDetailsBinding
 import com.example.lbctechnicaltest.models.Album
 import com.example.lbctechnicaltest.utils.loadImageWithCache
 
@@ -25,10 +25,9 @@ class AlbumDetailsFragment : Fragment() {
     ): View {
         Log.v(TAG, "onCreateView")
 
-        album = args.album
-
         binding = FragmentAlbumDetailsBinding.inflate(inflater, container, false)
 
+        album = args.album
         binding.album = album
 
         return binding.root
@@ -44,12 +43,15 @@ class AlbumDetailsFragment : Fragment() {
         val adapter = AlbumDetailsAdapter()
         binding.albumTrackListRecycler.adapter = adapter
 
-        displaySongsThumbnails(binding)
         adapter.updateData(album.trackList)
+        displayAlbumThumbnail(binding)
     }
 
-    private fun displaySongsThumbnails(binding: FragmentAlbumDetailsBinding) {
-        Log.v(TAG, "displaySongsThumbnails")
+    /**
+     * Takes the first 4 song and get their thumbnail to generate an album picture
+     */
+    private fun displayAlbumThumbnail(binding: FragmentAlbumDetailsBinding) {
+        Log.v(TAG, "displayAlbumThumbnail")
 
         album.trackList.getOrNull(0)
             ?.let { loadImageWithCache(it.thumbnailUrl, binding.itemAlbumPicture.itemAlbumImageFirst) }
